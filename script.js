@@ -1,121 +1,252 @@
-<!doctype html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Calculadora de Tiradas</title>
-    <link
-      rel="stylesheet"
-      href="style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <div class="align-center">
-        <img
-          id="gandalf-rune"
-          src="img/gandalf-rune.png"
-          alt="Gandalfs rune" />
-        <h1 id="page_title"></h1>
-      </div>
+// --- Language handling ---
+let lang = {};
 
-      <!-- separator -->
-      <div class="separator"></div>
+async function loadLanguage(code) {
+  const resp = await fetch(`lang/${code}.json`);
+  lang = await resp.json();
 
-      <!-- Num D6 -->
-      <div class="input-group">
-        <h2 id="label_num_d6"></h2>
-        <div class="number-input">
-          <button class="decrement">-</button>
-          <input
-            type="number"
-            id="num_d6"
-            min="0"
-            value="3" />
-          <button class="increment">+</button>
-        </div>
-      </div>
+  document.title = lang.title;
+  document.getElementById("page_title").innerText = lang.title;
+  document.getElementById("label_num_d6").innerText = lang.label_num_d6;
+  document.getElementById("label_target").innerText = lang.label_target;
+  document.getElementById("label_d12_mode").innerText = lang.label_d12_mode;
+  document.getElementById("option_normal").innerText = lang.option_normal;
+  document.getElementById("option_favored").innerText = lang.option_favored;
+  document.getElementById("option_illfavored").innerText =
+    lang.option_illfavored;
+  document.getElementById("label_modifiers").innerText = lang.label_modifiers;
+  document.getElementById("label_tired").innerText = lang.label_tired;
+  document.getElementById("label_demoralized").innerText =
+    lang.label_demoralized;
 
-      <!-- separator -->
-      <div class="separator"></div>
+  calculateAndUpdate();
+}
 
-      <!-- Target -->
-      <div class="input-group">
-        <h2 id="label_target"></h2>
-        <div class="number-input">
-          <button class="decrement">-</button>
-          <input
-            type="number"
-            id="target"
-            min="0"
-            value="10" />
-          <button class="increment">+</button>
-        </div>
-      </div>
+function switchLanguage(code) {
+  loadLanguage(code);
+}
 
-      <!-- separator -->
-      <div class="separator"></div>
+// --- Rules ---
+const D12Mode = { NORMAL: 0, FAVORED: 1, ILLFAVORED: -1 };
 
-      <!-- D12 Mode -->
-      <div class="input-group">
-        <h2 id="label_d12_mode"></h2>
-        <label>
-          <input
-            type="radio"
-            name="d12_mode"
-            value="0"
-            checked />
-          <span id="option_normal"></span>
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="d12_mode"
-            value="1" />
-          <span id="option_favored"></span>
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="d12_mode"
-            value="-1" />
-          <span id="option_illfavored"></span>
-        </label>
-      </div>
+class Roll {
+  constructor(
+    num_d6,
+    target,
+    d12_mode = D12Mode.NORMAL,
+    tired = false,
+    demoralized = false,
+  ) {
+    if (num_d6 < 0) {
+      throw new Error("num_d6 must be >= 0");
+    }
 
-      <!-- separator -->
-      <div class="separator"></div>
+    this.num_d6 = num_d6;
+    this.target = target;
+    this.d12_mode = d12_mode;
+    this.tired = tired;
+    this.demoralized = demoralized;
+  }
+}
 
-      <!-- Checkboxes -->
-      <div class="input-group">
-        <h2 id="label_modifiers"></h2>
-        <label>
-          <input
-            type="checkbox"
-            id="tired" />
-          <span id="label_tired"></span>
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            id="demoralized" />
-          <span id="label_demoralized"></span>
-        </label>
-      </div>
+// --- Exact optimized D6 distribution ---
+function d6Distribution(num_d6, tired) {
+  let dp = new Map();
+  dp.set("0,0", 1);
 
-      <!-- separator -->
-      <div class="separator"></div>
+  for (let i = 0; i < num_d6; i++) {
+    const next = new Map();
 
-      <h2 id="result"></h2>
+    for (const [key, count] of dp.entries()) {
+      const [sum, sixes] = key.split(",").map(Number);
 
-      <!-- separator -->
-      <div class="separator"></div>
+      for (let face = 1; face <= 6; face++) {
+        const val = tired && face <= 3 ? 0 : face;
 
-      <div class="lang-switch">
-        <button onclick="switchLanguage('es')">ES</button>
-        <button onclick="switchLanguage('ca')">CA</button>
-        <button onclick="switchLanguage('en')">EN</button>
-      </div>
-    </div>
+        const newSum = sum + val;
+        const newSixes = sixes + (face === 6 ? 1 : 0);
 
-    <script src="script.js"></script>
-  </body>
-</html>
+        const newKey = `${newSum},${newSixes}`;
+
+        next.set(newKey, (next.get(newKey) || 0) + count);
+      }
+    }
+
+    dp = next;
+  }
+
+  return dp;
+}
+
+// --- D12 distribution ---
+function d12Distribution(mode) {
+  const dist = new Map();
+  const faces = [...Array(12).keys()]; // 0..11
+
+  if (mode === D12Mode.NORMAL) {
+    for (const v of faces) {
+      dist.set(v, 1);
+    }
+
+    return dist;
+  }
+
+  for (const a of faces) {
+    for (const b of faces) {
+      const result = mode === D12Mode.FAVORED ? Math.max(a, b) : Math.min(a, b);
+
+      dist.set(result, (dist.get(result) || 0) + 1);
+    }
+  }
+
+  return dist;
+}
+
+// --- Success rules ---
+function isSuccess(sum_d6, d12_val, roll) {
+  // Gandalf rune = automatic success
+  if (d12_val === 11) {
+    return true;
+  }
+
+  // Eye of Sauron = automatic failure if demoralized
+  if (roll.demoralized && d12_val === 0) {
+    return false;
+  }
+
+  return sum_d6 + d12_val >= roll.target;
+}
+
+// --- Success probability ---
+function probabilitySuccess(roll) {
+  const d6 = d6Distribution(roll.num_d6, roll.tired);
+  const d12 = d12Distribution(roll.d12_mode);
+
+  let total = 0;
+  let success = 0;
+
+  for (const [key, w_d6] of d6.entries()) {
+    const [sum_d6] = key.split(",").map(Number);
+
+    for (const [d12_val, w_d12] of d12.entries()) {
+      const weight = w_d6 * w_d12;
+
+      total += weight;
+
+      if (isSuccess(sum_d6, d12_val, roll)) {
+        success += weight;
+      }
+    }
+  }
+
+  return success / total;
+}
+
+// --- Great success probability ---
+function probabilityGrandSuccess(roll) {
+  const d6 = d6Distribution(roll.num_d6, roll.tired);
+  const d12 = d12Distribution(roll.d12_mode);
+
+  const ge = { 1: 0, 2: 0, 3: 0, 4: 0 };
+
+  let total = 0;
+
+  for (const [key, w_d6] of d6.entries()) {
+    const [sum_d6, n_sixes] = key.split(",").map(Number);
+
+    for (const [d12_val, w_d12] of d12.entries()) {
+      const weight = w_d6 * w_d12;
+
+      total += weight;
+
+      // Great success requires a normal success first
+      if (!isSuccess(sum_d6, d12_val, roll)) {
+        continue;
+      }
+
+      // Requires at least one Tengwar (6)
+      if (n_sixes <= 0) {
+        continue;
+      }
+
+      for (let i = 1; i <= Math.min(n_sixes, 4); i++) {
+        ge[i] += weight;
+      }
+    }
+  }
+
+  for (const k in ge) {
+    ge[k] /= total;
+  }
+
+  return ge;
+}
+
+// --- UI helpers ---
+function attachNumberButtons(id) {
+  const input = document.getElementById(id);
+  const container = input.parentNode;
+
+  const btnDec = container.querySelector(".decrement");
+  const btnInc = container.querySelector(".increment");
+
+  btnDec.addEventListener("click", () => {
+    input.value = Math.max(Number(input.min) || 0, Number(input.value) - 1);
+
+    calculateAndUpdate();
+  });
+
+  btnInc.addEventListener("click", () => {
+    input.value = Number(input.value) + 1;
+
+    calculateAndUpdate();
+  });
+}
+
+// --- D12 mode helper ---
+function getD12Mode() {
+  const selected = document.querySelector('input[name="d12_mode"]:checked');
+
+  return Number(selected.value);
+}
+
+// --- Main UI update ---
+function calculateAndUpdate() {
+  const roll = new Roll(
+    Number(document.getElementById("num_d6").value),
+    Number(document.getElementById("target").value),
+    getD12Mode(),
+    document.getElementById("tired").checked,
+    document.getElementById("demoralized").checked,
+  );
+
+  const prob = probabilitySuccess(roll);
+  const ge = probabilityGrandSuccess(roll);
+
+  const lambe = '<img src="img/tengwar-lambe.png" class="lambe-icon">';
+
+  document.getElementById("result").innerHTML = `
+    ${lang.result_success}: ${(prob * 100).toFixed(2)}%<br>
+    ${lambe}: ${(ge[1] * 100).toFixed(2)}%<br>
+    ${lambe}${lambe}: ${(ge[2] * 100).toFixed(2)}%<br>
+    ${lambe}${lambe}${lambe}: ${(ge[3] * 100).toFixed(2)}%<br>
+    ${lambe}${lambe}${lambe}${lambe}: ${(ge[4] * 100).toFixed(2)}%
+  `;
+}
+
+// --- Event wiring ---
+["num_d6", "target"].forEach(attachNumberButtons);
+
+["num_d6", "target", "tired", "demoralized"].forEach((id) => {
+  const el = document.getElementById(id);
+
+  el.addEventListener("input", calculateAndUpdate);
+  el.addEventListener("change", calculateAndUpdate);
+});
+
+document.querySelectorAll('input[name="d12_mode"]').forEach((radio) => {
+  radio.addEventListener("change", calculateAndUpdate);
+});
+
+// --- Init ---
+loadLanguage("es");
