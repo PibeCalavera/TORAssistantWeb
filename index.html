@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Calculadora de Tiradas</title>
+    <link
+      rel="stylesheet"
+      href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="align-center">
+        <img
+          id="gandalf-rune"
+          src="img/gandalf-rune.png"
+          alt="Gandalfs rune" />
+        <h1 id="page_title"></h1>
+      </div>
+
+      <!-- separator -->
+      <div class="separator"></div>
+
+      <!-- Num D6 -->
+      <div class="input-group">
+        <h2 id="label_num_d6"></h2>
+        <div class="number-input">
+          <button class="decrement">-</button>
+          <input
+            type="number"
+            id="num_d6"
+            min="0"
+            value="3" />
+          <button class="increment">+</button>
+        </div>
+      </div>
+
+      <!-- separator -->
+      <div class="separator"></div>
+
+      <!-- Target -->
+      <div class="input-group">
+        <h2 id="label_target"></h2>
+        <div class="number-input">
+          <button class="decrement">-</button>
+          <input
+            type="number"
+            id="target"
+            min="0"
+            value="10" />
+          <button class="increment">+</button>
+        </div>
+      </div>
+
+      <!-- separator -->
+      <div class="separator"></div>
+
+      <!-- D12 Mode -->
+      <div class="input-group">
+        <h2 id="label_d12_mode"></h2>
+        <label>
+          <input
+            type="radio"
+            name="d12_mode"
+            value="0"
+            checked />
+          <span id="option_normal"></span>
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="d12_mode"
+            value="1" />
+          <span id="option_favored"></span>
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="d12_mode"
+            value="-1" />
+          <span id="option_illfavored"></span>
+        </label>
+      </div>
+
+      <!-- separator -->
+      <div class="separator"></div>
+
+      <!-- Checkboxes -->
+      <div class="input-group">
+        <h2 id="label_modifiers"></h2>
+        <label>
+          <input
+            type="checkbox"
+            id="tired" />
+          <span id="label_tired"></span>
+        </label>
+        <label>
+          <input
+            type="checkbox"
+            id="demoralized" />
+          <span id="label_demoralized"></span>
+        </label>
+      </div>
+
+      <!-- separator -->
+      <div class="separator"></div>
+
+      <h2 id="result"></h2>
+
+      <!-- separator -->
+      <div class="separator"></div>
+
+      <div class="lang-switch">
+        <button onclick="switchLanguage('es')">ES</button>
+        <button onclick="switchLanguage('ca')">CA</button>
+        <button onclick="switchLanguage('en')">EN</button>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

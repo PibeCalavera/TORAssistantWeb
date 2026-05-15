@@ -1,0 +1,18 @@
+{
+  "title": "Probabilitats EAU 2a edició",
+  "label_num_d6": "Daus D6:",
+  "label_target": "Objectiu:",
+  "label_d12_mode": "Mode D12:",
+  "option_normal": "Normal",
+  "option_favored": "Afavorit",
+  "option_illfavored": "Desafavorit",
+  "label_modifiers": "Modificadors:",
+  "label_tired": "Cansat",
+  "label_demoralized": "Desmoralitzat",
+  "button_calculate": "Calcular",
+  "result_success": "Probabilitat d'Èxit",
+  "result_ge1": "Probabilitat de Gran Èxit ≥1",
+  "result_ge2": "Probabilitat de Gran Èxit ≥2",
+  "result_ge3": "Probabilitat de Gran Èxit ≥3",
+  "result_ge4": "Probabilitat de Gran Èxit ≥4"
+}

@@ -1,0 +1,18 @@
+{
+  "title": "Probabilidades EAU 2ed",
+  "label_num_d6": "Dados D6:",
+  "label_target": "Objetivo:",
+  "label_d12_mode": "Modo D12:",
+  "option_normal": "Normal",
+  "option_favored": "Favorecida",
+  "option_illfavored": "Desfavorecida",
+  "label_modifiers": "Estados:",
+  "label_tired": "Cansado",
+  "label_demoralized": "Desmoralizado",
+  "button_calculate": "Calcular",
+  "result_success": "Probabilidad de Éxito",
+  "result_ge1": "Probabilidad de Gran Éxito ≥1",
+  "result_ge2": "Probabilidad de Gran Éxito ≥2",
+  "result_ge3": "Probabilidad de Gran Éxito ≥3",
+  "result_ge4": "Probabilidad de Gran Éxito ≥4"
+}
