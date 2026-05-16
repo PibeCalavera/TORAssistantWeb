@@ -18,7 +18,7 @@
   /* ------------------ SHADOWS ------------------ */
   --shadow-color: #333;
 
-  --text-shadow: 2px 2px 2px var(--shadow-color);
+  --text-shadow: 1px 1px 4px var(--shadow-color);
   --box-shadow: 2px 2px 16px rgba(0, 0, 0, 0.5);
   --box-shadow-soft: 1px 1px 2px var(--shadow-color);
   --box-shadow-inset: inset 1px 1px 12px var(--shadow-color);
@@ -43,25 +43,22 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  margin: 0;
 }
 
 /* ------------------ TITLES ------------------ */
 
 h1 {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 /* ------------------ CONTAINER ------------------ */
 
 .container {
-  flex: 1;
-  max-width: 900px;
+  max-width: 500px;
 
-  margin: auto;
-  padding: clamp(0.875rem, 4vw, 1.5625rem);
+  padding: 0.5rem;
+  box-sizing: border-box;
 
   border: 3px solid var(--border-dark);
   border-radius: var(--radius);
@@ -85,7 +82,7 @@ h1 {
 
 .is-display-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
 }
 
@@ -105,7 +102,7 @@ h1 {
 #gandalf-rune {
   width: 2.375rem;
   height: auto;
-  padding: 0 0.625rem 0.625rem 0;
+  margin: 0 0.2rem 0.5rem 0;
 }
 
 /* ------------------ INPUTS ------------------ */
