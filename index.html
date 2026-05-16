@@ -20,91 +20,83 @@
       <!-- separator -->
       <div class="separator"></div>
 
-      <!-- Num D6 -->
-      <div class="input-group">
-        <h2 id="label_num_d6"></h2>
-        <div class="number-input">
-          <button class="decrement">-</button>
-          <input
-            type="number"
-            id="num_d6"
-            min="0"
-            value="3" />
-          <button class="increment">+</button>
+      <div class="is-display-grid">
+        <!-- Num D6 -->
+        <div class="input-group">
+          <h2 id="label_num_d6"></h2>
+          <div class="number-input">
+            <button class="decrement">-</button>
+            <input
+              type="number"
+              id="num_d6"
+              min="0"
+              value="3" />
+            <button class="increment">+</button>
+          </div>
         </div>
-      </div>
 
-      <!-- separator -->
-      <div class="separator"></div>
-
-      <!-- Target -->
-      <div class="input-group">
-        <h2 id="label_target"></h2>
-        <div class="number-input">
-          <button class="decrement">-</button>
-          <input
-            type="number"
-            id="target"
-            min="0"
-            value="10" />
-          <button class="increment">+</button>
+        <!-- Target -->
+        <div class="input-group">
+          <h2 id="label_target"></h2>
+          <div class="number-input">
+            <button class="decrement">-</button>
+            <input
+              type="number"
+              id="target"
+              min="0"
+              value="10" />
+            <button class="increment">+</button>
+          </div>
         </div>
+
+        <!-- D12 Mode -->
+        <div class="input-group">
+          <h2 id="label_d12_mode"></h2>
+          <label>
+            <input
+              type="radio"
+              name="d12_mode"
+              value="0"
+              checked />
+            <span id="option_normal"></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="d12_mode"
+              value="1" />
+            <span id="option_favored"></span>
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="d12_mode"
+              value="-1" />
+            <span id="option_illfavored"></span>
+          </label>
+        </div>
+
+        <!-- Checkboxes -->
+        <div class="input-group">
+          <h2 id="label_modifiers"></h2>
+          <label>
+            <input
+              type="checkbox"
+              id="tired" />
+            <span id="label_tired"></span>
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              id="demoralized" />
+            <span id="label_demoralized"></span>
+          </label>
+        </div>
+
+        <h2
+          class="grid-last-row"
+          id="result"></h2>
       </div>
-
-      <!-- separator -->
-      <div class="separator"></div>
-
-      <!-- D12 Mode -->
-      <div class="input-group">
-        <h2 id="label_d12_mode"></h2>
-        <label>
-          <input
-            type="radio"
-            name="d12_mode"
-            value="0"
-            checked />
-          <span id="option_normal"></span>
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="d12_mode"
-            value="1" />
-          <span id="option_favored"></span>
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="d12_mode"
-            value="-1" />
-          <span id="option_illfavored"></span>
-        </label>
-      </div>
-
-      <!-- separator -->
-      <div class="separator"></div>
-
-      <!-- Checkboxes -->
-      <div class="input-group">
-        <h2 id="label_modifiers"></h2>
-        <label>
-          <input
-            type="checkbox"
-            id="tired" />
-          <span id="label_tired"></span>
-        </label>
-        <label>
-          <input
-            type="checkbox"
-            id="demoralized" />
-          <span id="label_demoralized"></span>
-        </label>
-      </div>
-
-      <!-- separator -->
-      <div class="separator"></div>
-
-      <h2 id="result"></h2>
 
       <!-- separator -->
       <div class="separator"></div>
