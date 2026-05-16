@@ -242,3 +242,51 @@ select {
 
   box-shadow: var(--box-shadow-soft);
 }
+
+/* ------------------ RESPONSIVE ------------------ */
+
+@media (max-width: 600px) {
+  html {
+    font-size: 24px;
+  }
+
+  img {
+    max-width: 110%;
+    height: auto;
+  }
+
+  .container {
+    padding: 1.5rem;
+  }
+
+  .number-input button {
+    width: 5rem;
+    height: 5rem;
+    font-size: 2.4rem;
+  }
+
+  .number-input input[type="number"] {
+    width: 5rem;
+    height: 4rem;
+    font-size: 1.6rem;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    transform: scale(1.7);
+  }
+
+  select {
+    font-size: 1.2rem;
+    padding: 0.6rem;
+  }
+
+  #gandalf-rune {
+    width: 3rem;
+  }
+
+  .lang-switch button {
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+  }
+}
