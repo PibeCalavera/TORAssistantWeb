@@ -109,17 +109,6 @@ h1 {
 
 /* ------------------ INPUTS ------------------ */
 
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-input[type="number"] {
-  -moz-appearance: textfield;
-  appearance: textfield;
-}
-
 .input-group {
   margin-top: 0.3rem;
 }
@@ -151,6 +140,19 @@ label {
 
   text-shadow: var(--text-shadow);
   box-shadow: var(--box-shadow-inset);
+}
+
+/* ------------------ REMOVE NUMBER INPUT ARROWS ------------------ */
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 /* buttons */
