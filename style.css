@@ -109,13 +109,24 @@ h1 {
 
 /* ------------------ INPUTS ------------------ */
 
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
 .input-group {
-  margin-top: 0.9375rem;
+  margin-top: 0.3rem;
 }
 
 label {
   display: block;
-  margin-bottom: 0.3125rem;
+  margin-bottom: 0.3rem;
 }
 
 .number-input {
@@ -150,7 +161,7 @@ label {
   font-size: 2rem;
 
   padding: 0;
-  margin: 0 0.5rem;
+  margin: 0 0.3rem;
 
   border: none;
   border-radius: var(--radius);
