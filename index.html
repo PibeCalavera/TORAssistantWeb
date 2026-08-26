@@ -5,7 +5,11 @@
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0" />
-    <title>Calculadora de Tiradas</title>
+    <title>Probability Calculator</title>
+    <link
+      rel="icon"
+      href="img/favicon.png"
+      type="image/png" />
     <link
       rel="stylesheet"
       href="style.css" />
@@ -17,7 +21,7 @@
           id="gandalf-rune"
           src="img/gandalf-rune.png"
           alt="Gandalfs rune" />
-        <h1 id="page_title"></h1>
+        <h1 id="page_title">TOR 2ed Probability Assistant</h1>
       </div>
 
       <!-- separator -->
@@ -25,80 +29,162 @@
 
       <div class="is-display-grid">
         <!-- Num D6 -->
-        <div class="input-group">
-          <h2 id="label_num_d6"></h2>
+        <fieldset class="input-group">
+          <legend
+            class="title"
+            id="label_num_d6">
+            D6 Dice
+          </legend>
+
+          <label
+            for="num_d6"
+            id="label_num_d6_input">
+            Dice to roll
+          </label>
+
           <div class="number-input">
-            <button class="decrement">-</button>
+            <button
+              class="decrement"
+              type="button">
+              -
+            </button>
+
             <input
               type="number"
               id="num_d6"
               min="0"
               value="3" />
-            <button class="increment">+</button>
+
+            <button
+              class="increment"
+              type="button">
+              +
+            </button>
           </div>
-        </div>
+        </fieldset>
 
         <!-- Target -->
-        <div class="input-group">
-          <h2 id="label_target"></h2>
+        <fieldset class="input-group">
+          <legend
+            class="title"
+            id="label_target">
+            Target
+          </legend>
+
+          <label
+            for="target"
+            id="label_target_input">
+            Target Number
+          </label>
           <div class="number-input">
-            <button class="decrement">-</button>
+            <button
+              class="decrement"
+              type="button">
+              -
+            </button>
+
             <input
               type="number"
               id="target"
               min="0"
               value="10" />
-            <button class="increment">+</button>
+
+            <button
+              class="increment"
+              type="button">
+              +
+            </button>
           </div>
-        </div>
+        </fieldset>
 
         <!-- D12 Mode -->
-        <div class="input-group">
-          <h2 id="label_d12_mode"></h2>
-          <label>
+        <fieldset class="input-group">
+          <legend
+            class="title"
+            id="label_d12_mode">
+            D12 Mode
+          </legend>
+
+          <div>
             <input
               type="radio"
+              id="d12_normal"
               name="d12_mode"
               value="0"
               checked />
-            <span id="option_normal"></span>
-          </label>
-          <label>
+            <label
+              for="d12_normal"
+              id="option_normal">
+              Normal
+            </label>
+          </div>
+
+          <div>
             <input
               type="radio"
+              id="d12_favored"
               name="d12_mode"
               value="1" />
-            <span id="option_favored"></span>
-          </label>
-          <label>
+            <label
+              for="d12_favored"
+              id="option_favored">
+              Favored
+            </label>
+          </div>
+
+          <div>
             <input
               type="radio"
+              id="d12_illfavored"
               name="d12_mode"
               value="-1" />
-            <span id="option_illfavored"></span>
-          </label>
-        </div>
+            <label
+              for="d12_illfavored"
+              id="option_illfavored">
+              Ill-favored
+            </label>
+          </div>
+        </fieldset>
 
         <!-- Checkboxes -->
-        <div class="input-group">
-          <h2 id="label_modifiers"></h2>
-          <label>
+        <fieldset class="input-group">
+          <legend
+            class="title"
+            id="label_modifiers">
+            Modifiers
+          </legend>
+
+          <div>
             <input
               type="checkbox"
               id="tired" />
-            <span id="label_tired"></span>
-          </label>
-          <label>
+            <label
+              for="tired"
+              id="label_tired">
+              Tired
+            </label>
+          </div>
+
+          <div>
             <input
               type="checkbox"
               id="demoralized" />
-            <span id="label_demoralized"></span>
-          </label>
-        </div>
+            <label
+              for="demoralized"
+              id="label_demoralized">
+              Demoralized
+            </label>
+          </div>
+        </fieldset>
 
-        <h2
-          class="grid-last-row"
-          id="result"></h2>
+        <fieldset class="grid-last-row">
+          <legend
+            class="title"
+            id="label_result">
+            Result
+          </legend>
+          <div id="result">%</div>
+        </fieldset>
       </div>
 
       <!-- separator -->
