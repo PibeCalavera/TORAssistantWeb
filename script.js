@@ -8,7 +8,11 @@ async function loadLanguage(code) {
   document.title = lang.title;
   document.getElementById("page_title").innerText = lang.title;
   document.getElementById("label_num_d6").innerText = lang.label_num_d6;
+  document.getElementById("label_num_d6_input").innerText =
+    lang.label_num_d6_input;
   document.getElementById("label_target").innerText = lang.label_target;
+  document.getElementById("label_target_input").innerText =
+    lang.label_target_input;
   document.getElementById("label_d12_mode").innerText = lang.label_d12_mode;
   document.getElementById("option_normal").innerText = lang.option_normal;
   document.getElementById("option_favored").innerText = lang.option_favored;
@@ -18,6 +22,7 @@ async function loadLanguage(code) {
   document.getElementById("label_tired").innerText = lang.label_tired;
   document.getElementById("label_demoralized").innerText =
     lang.label_demoralized;
+  document.getElementById("label_result").innerText = lang.label_result;
 
   calculateAndUpdate();
 }
